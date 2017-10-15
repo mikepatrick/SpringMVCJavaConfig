@@ -1,0 +1,71 @@
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+apply plugin: 'eclipse-wtp'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/groovy'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+	test {
+		java {
+			srcDir 'src/test/java'
+			
+		}
+		groovy {
+			srcDir 'src/test/groovy'
+		}
+//		resources {
+//			srcDir 'src/test/resources'
+//		}
+	}
+}
+
+repositories {
+	//mavenLocal()
+	mavenCentral()
+}
+
+war {
+	baseName = 'SpringMVCJavaConfig'
+	version = '0.0.1-SNAPSHOT'
+}
+
+group = 'com.cds.gemini'
+
+dependencies {
+	compile 'org.springframework:spring-webmvc:+'
+	compile 'org.springframework:spring-core:+'
+	compile 'org.springframework:spring-jdbc:+'
+	
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.3.10'
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
+	compile group: 'com.h2database', name: 'h2', version: '1.4.192'
+	
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.6.2'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.6.2'
+	
+	providedCompile group: 'javax.servlet.jsp', name: 'javax.servlet.jsp-api', version: '2.3.0'
+	compile group: 'org.springframework', name: 'spring-test', version: '4.3.2.RELEASE'
+	
+	compile group: 'junit', name: 'junit', version: '4.12'
+	compile group: 'org.hamcrest', name: 'hamcrest-junit', version: '2.0.0.0'
+	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.+'
+	
+	// Should these be exported by CommonServices?
+	compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
+	compile 'org.codehaus.groovy.modules.http-builder:http-builder:+'
+	
+	//compile 'com.cds.gemini:CommonDomainModel:+'
+	//compile 'com.cds.gemini:CommonServices:+'
+	compile project(":CommonDomainModel")
+	compile project(":CommonServices")
+}
